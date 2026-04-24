@@ -1,0 +1,603 @@
+{
+  "info": {
+    "name": "Assurance Partenaires API",
+    "description": "Collection de tests pour l'API de gestion des partenaires d'assurance - Base de donnees pre-initialisee avec 5 partenaires",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Tests GET (Lecture)",
+      "item": [
+        {
+          "name": "GET - Tous les partenaires (5 attendus)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code est 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('La reponse est un tableau', () => { pm.expect(pm.response.json()).to.be.an('array'); });",
+                  "pm.test('5 partenaires sont retournes', () => { pm.expect(pm.response.json().length).to.eql(5); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Partenaire par ID (ID=1 - SUNU)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code est 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('Le nom est Assurance SUNU', () => { pm.expect(pm.response.json().nom).to.eql('Assurance SUNU'); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Partenaire par ID (ID=2 - AXA)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires/2",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires", "2"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Partenaire par ID (ID=3 - NSIA)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires/3",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires", "3"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Partenaire par ID (ID=4 - Jean Dupont)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires/4",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires", "4"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Partenaire par ID (ID=5 - Marie Diop)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires/5",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires", "5"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. Tests de Recherche",
+      "item": [
+        {
+          "name": "GET - Rechercher par nom (Assurance SUNU)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires/search/nom?nom=Assurance%20SUNU",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires", "search", "nom"],
+              "query": [
+                {
+                  "key": "nom",
+                  "value": "Assurance SUNU"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Rechercher par email (contact@sunu.sn)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires/search/email?email=contact@sunu.sn",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires", "search", "email"],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "contact@sunu.sn"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Rechercher par categorie (PROFESSIONNEL)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code est 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('3 professionnels sont retournes', () => { pm.expect(pm.response.json().length).to.eql(3); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires/search/categorie?categorie=PROFESSIONNEL",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires", "search", "categorie"],
+              "query": [
+                {
+                  "key": "categorie",
+                  "value": "PROFESSIONNEL"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Rechercher par categorie (PARTICULIER)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code est 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('2 particuliers sont retournes', () => { pm.expect(pm.response.json().length).to.eql(2); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires/search/categorie?categorie=PARTICULIER",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires", "search", "categorie"],
+              "query": [
+                {
+                  "key": "categorie",
+                  "value": "PARTICULIER"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Rechercher par statut (ACTIF)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code est 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('4 actifs sont retournes', () => { pm.expect(pm.response.json().length).to.eql(4); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires/search/statut?statut=ACTIF",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires", "search", "statut"],
+              "query": [
+                {
+                  "key": "statut",
+                  "value": "ACTIF"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Rechercher par statut (INACTIF)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code est 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('1 inactif est retourne', () => { pm.expect(pm.response.json().length).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires/search/statut?statut=INACTIF",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires", "search", "statut"],
+              "query": [
+                {
+                  "key": "statut",
+                  "value": "INACTIF"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Rechercher par ville (Dakar)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code est 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('3 partenaires a Dakar sont retournes', () => { pm.expect(pm.response.json().length).to.eql(3); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires/search/ville?ville=Dakar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires", "search", "ville"],
+              "query": [
+                {
+                  "key": "ville",
+                  "value": "Dakar"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. Tests CRUD (Creation, Modification, Suppression)",
+      "item": [
+        {
+          "name": "POST - Creer un nouveau partenaire",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Allianz Assurance\",\n  \"categorie\": \"PROFESSIONNEL\",\n  \"adresse\": \"78 Rue de la Liberte\",\n  \"ville\": \"Dakar\",\n  \"telephone\": \"772233445\",\n  \"email\": \"contact@allianz.sn\",\n  \"latitude\": 14.7167,\n  \"longitude\": -17.4677,\n  \"statut\": \"ACTIF\",\n  \"plafondPriseEnCharge\": 1800000\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Modifier un partenaire (ID=1)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Assurance SUNU Updated\",\n  \"categorie\": \"PROFESSIONNEL\",\n  \"adresse\": \"456 Avenue de la Liberte\",\n  \"ville\": \"Dakar\",\n  \"telephone\": \"778887766\",\n  \"email\": \"contact@sunu.sn\",\n  \"latitude\": 14.7167,\n  \"longitude\": -17.4677,\n  \"statut\": \"ACTIF\",\n  \"plafondPriseEnCharge\": 2500000\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE - Supprimer un partenaire (ID=6 - celui cree plus tot)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires/6",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires", "6"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4. Tests fonctionnels",
+      "item": [
+        {
+          "name": "GET - Compter les partenaires (5 initiaux)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code est 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('5 partenaires sont comptes', () => { pm.expect(pm.response.json()).to.eql(5); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires/count",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires", "count"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Verifier existence par email existant",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code est 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('L email existe (true)', () => { pm.expect(pm.response.json()).to.eql(true); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires/exists/email?email=contact@sunu.sn",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires", "exists", "email"],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "contact@sunu.sn"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Verifier existence par email inexistant",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code est 200', () => { pm.response.to.have.status(200); });",
+                  "pm.test('L email n existe pas (false)', () => { pm.expect(pm.response.json()).to.eql(false); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires/exists/email?email=inexistant@test.com",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires", "exists", "email"],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "inexistant@test.com"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5. Tests d'erreur",
+      "item": [
+        {
+          "name": "GET - Partenaire inexistant (doit retourner 404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code est 404', () => { pm.response.to.have.status(404); });",
+                  "pm.test('Le message d erreur est present', () => { pm.expect(pm.response.json().message).to.include('non trouve'); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires/999",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires", "999"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST - Validation erreur (email invalide - 400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code est 400', () => { pm.response.to.have.status(400); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Test Erreur\",\n  \"categorie\": \"PROFESSIONNEL\",\n  \"adresse\": \"Rue Test\",\n  \"ville\": \"Dakar\",\n  \"telephone\": \"771234567\",\n  \"email\": \"email-invalide\",\n  \"latitude\": 14.7167,\n  \"longitude\": -17.4677,\n  \"statut\": \"ACTIF\",\n  \"plafondPriseEnCharge\": 1000000\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST - Email duplique (doit retourner 409 Conflict)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code est 409', () => { pm.response.to.have.status(409); });",
+                  "pm.test('Message de conflit present', () => { pm.expect(pm.response.json().message).to.include('existe deja'); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Duplicate Test\",\n  \"categorie\": \"PARTICULIER\",\n  \"adresse\": \"Adresse Test\",\n  \"ville\": \"Dakar\",\n  \"telephone\": \"776655443\",\n  \"email\": \"contact@sunu.sn\",\n  \"latitude\": 14.7167,\n  \"longitude\": -17.4677,\n  \"statut\": \"ACTIF\",\n  \"plafondPriseEnCharge\": 500000\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/partenaires",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "partenaires"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api"
+    }
+  ]
+}
