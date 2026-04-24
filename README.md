@@ -319,10 +319,10 @@ Le pipeline GitHub Actions exécute automatiquement :
 3. ✅ Exécution des tests
 4. ✅ Génération des rapports JaCoCo
 5. ✅ Upload des artefacts (rapports + JAR)
-**(https://github.com/PapaBadara/examen-QA/actions)**
 
 
-**[🔗 Lien vers le pipeline](#-table-des-matières)**
+
+**[🔗 Lien vers le pipeline](https://github.com/PapaBadara/examen-QA/actions)**
 
 ---
 
