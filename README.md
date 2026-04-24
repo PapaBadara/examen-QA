@@ -319,42 +319,10 @@ Le pipeline GitHub Actions exécute automatiquement :
 3. ✅ Exécution des tests
 4. ✅ Génération des rapports JaCoCo
 5. ✅ Upload des artefacts (rapports + JAR)
+**(https://github.com/PapaBadara/examen-QA/actions)**
 
-```yaml
-# .github/workflows/ci.yml
-name: CI - Quality Pipeline
 
-on:
-  push:
-    branches: [ main, develop, master ]
-  pull_request:
-    branches: [ main, master ]
-
-jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: assurance_db
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-      - run: mvn clean compile
-      - run: mvn checkstyle:check
-      - run: mvn clean test jacoco:report
-      - uses: actions/upload-artifact@v4
-        with:
-          name: jacoco-report
-          path: target/site/jacoco/
-```
-
-**[🔼 Retour à la table des matières](#-table-des-matières)**
+**[🔗 Lien vers le pipeline](#-table-des-matières)**
 
 ---
 
