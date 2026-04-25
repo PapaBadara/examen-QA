@@ -49,9 +49,9 @@ jobs:
       - name: Run Checkstyle check
         run: mvn checkstyle:check
 
-      # ÉTAPE CRITIQUE : Générer le rapport Checkstyle (créé target/checkstyle-result.xml)
+      # CORRECTION: Utiliser mvn verify pour générer le rapport XML
       - name: Generate Checkstyle report
-        run: mvn checkstyle:checkstyle
+        run: mvn verify
 
       # Vérifier que le fichier a bien été créé
       - name: Verify Checkstyle report exists
@@ -73,6 +73,7 @@ jobs:
           name: checkstyle-report
           path: target/checkstyle-result.xml
           retention-days: 7
+        if: success() || failure()
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
