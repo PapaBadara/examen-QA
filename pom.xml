@@ -90,6 +90,7 @@
 			</plugin>
 
 			<!-- Checkstyle Plugin - Verification des conventions de codage -->
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
@@ -98,11 +99,22 @@
 					<configLocation>checkstyle.xml</configLocation>
 					<consoleOutput>true</consoleOutput>
 					<failsOnError>false</failsOnError>
+					<outputFile>${project.build.directory}/checkstyle-result.xml</outputFile>
+					<outputFileFormat>xml</outputFileFormat>
 				</configuration>
 				<executions>
 					<execution>
+						<id>check</id>
 						<goals>
 							<goal>check</goal>
+						</goals>
+					</execution>
+					<!-- AJOUT : Ex�cution pour g�n�rer le rapport -->
+					<execution>
+						<id>checkstyle-report</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>checkstyle</goal>
 						</goals>
 					</execution>
 				</executions>
